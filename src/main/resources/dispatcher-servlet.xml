@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 开启SpringMVC注解模式-->
+    <!-- 简化配置：
+        （1）自动注册DefaultAnnotationHandlerMapping，AnnotationMethodHandlerAdapter
+        （2）提供一系列：数据绑定，数字和日期的format @NumberFormat，@DataTimeFormat，
+            xml,JSON默认读写支持
+    -->
+    <mvc:annotation-driven/>
+
+    <!-- 配置web相关Bean的扫描路径 -->
+    <context:component-scan base-package="site.sixteen.demo.web"/>
+
+
+    <!-- 配置静态资源默认处理方式
+         需要在web.xml中增加对静态资源的处理
+    -->
+    <!-- servlet-mapping 映射路径："/" -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 配置Jsp视图解析器ViewResolver-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <!-- MVC拦截器，根据需要配置
+        应用场景：用户登录权限
+    -->
+    <!-- 规则：
+            1. /**拦截多级，如/test/hello
+            2. /*拦截一级，如/test，不会拦截/test/**请求
+    -->
+    <!--
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="site.sixteen.demo.interceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    -->
+</beans>
